@@ -1074,76 +1074,6 @@
         line-height: 1.5;
     }
 
-    .password-field {
-        position: relative;
-    }
-
-    .password-field input {
-        padding-right: 52px;
-    }
-
-    .password-field input[type="password"]::-ms-reveal,
-    .password-field input[type="password"]::-ms-clear {
-        display: none;
-    }
-
-    .password-toggle {
-        position: absolute;
-        top: 50%;
-        right: 12px;
-        width: 34px;
-        height: 34px;
-        border: 1px solid rgba(121, 95, 224, 0.18);
-        border-radius: 999px;
-        background: rgba(255, 255, 255, 0.88);
-        transform: translateY(-50%);
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
-    }
-
-    .password-toggle:hover {
-        border-color: rgba(121, 95, 224, 0.34);
-        background: #ffffff;
-        transform: translateY(-50%) scale(1.03);
-    }
-
-    .password-toggle::before {
-        content: '';
-        width: 16px;
-        height: 10px;
-        border: 2px solid #795fe0;
-        border-radius: 14px 14px 10px 10px / 11px 11px 9px 9px;
-        display: block;
-    }
-
-    .password-toggle::after {
-        content: '';
-        position: absolute;
-        width: 4px;
-        height: 4px;
-        border-radius: 999px;
-        background: #795fe0;
-    }
-
-    .password-toggle span {
-        display: none;
-    }
-
-    .password-toggle[data-visible="true"]::before {
-        opacity: 0.72;
-    }
-
-    .password-toggle[data-visible="true"]::after {
-        width: 20px;
-        height: 2px;
-        border-radius: 999px;
-        transform: rotate(-36deg);
-        background: #f58d4a;
-    }
-
     .goal-card {
         padding: 14px;
         border-radius: 16px;
@@ -2846,24 +2776,15 @@
                                 <input type="hidden" name="return_to" value="{{ route('dashboard') }}#settings">
                                 <label class="field">
                                     <span>Current password</span>
-                                    <div class="password-field">
-                                        <input id="profile_current_password" type="password" name="current_password" placeholder="Current password" required>
-                                        <button type="button" class="password-toggle" data-password-toggle="profile_current_password" data-visible="false" aria-label="Show password"><span></span></button>
-                                    </div>
+                                    <input id="profile_current_password" type="password" name="current_password" placeholder="Current password" required>
                                 </label>
                                 <label class="field">
                                     <span>New password</span>
-                                    <div class="password-field">
-                                        <input id="profile_new_password" type="password" name="password" placeholder="New password" required>
-                                        <button type="button" class="password-toggle" data-password-toggle="profile_new_password" data-visible="false" aria-label="Show password"><span></span></button>
-                                    </div>
+                                    <input id="profile_new_password" type="password" name="password" placeholder="New password" required>
                                 </label>
                                 <label class="field">
                                     <span>Confirm new password</span>
-                                    <div class="password-field">
-                                        <input id="profile_new_password_confirmation" type="password" name="password_confirmation" placeholder="Confirm new password" required>
-                                        <button type="button" class="password-toggle" data-password-toggle="profile_new_password_confirmation" data-visible="false" aria-label="Show password"><span></span></button>
-                                    </div>
+                                    <input id="profile_new_password_confirmation" type="password" name="password_confirmation" placeholder="Confirm new password" required>
                                 </label>
                                 <button type="submit" class="primary-button settings-submit">Change Password</button>
                             </form>
@@ -3257,20 +3178,6 @@
         const initialTarget = window.location.hash.replace('#', '') || storedTarget || 'overview';
         activatePanel(initialTarget, false);
 
-        document.querySelectorAll('[data-password-toggle]').forEach((button) => {
-            button.addEventListener('click', () => {
-                const target = document.getElementById(button.dataset.passwordToggle);
-
-                if (! target) {
-                    return;
-                }
-
-                const isHidden = target.type === 'password';
-                target.type = isHidden ? 'text' : 'password';
-                button.dataset.visible = isHidden ? 'true' : 'false';
-                button.setAttribute('aria-label', isHidden ? 'Hide password' : 'Show password');
-            });
-        });
     });
 </script>
 @endpush

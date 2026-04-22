@@ -534,76 +534,6 @@
             color: rgba(47, 36, 88, 0.42);
         }
 
-        .field input[type="password"]::-ms-reveal,
-        .field input[type="password"]::-ms-clear {
-            display: none;
-        }
-
-        .field input.native-password-field[type="password"]::-ms-reveal,
-        .field input.native-password-field[type="password"]::-ms-clear {
-            display: block;
-        }
-
-        .field input.native-password-field {
-            padding-right: 16px;
-        }
-
-        .password-field {
-            position: relative;
-        }
-
-        .password-field input {
-            padding-right: 72px;
-        }
-
-        .password-toggle {
-            position: absolute;
-            right: 12px;
-            top: 50%;
-            min-width: 34px;
-            min-height: 34px;
-            padding: 0;
-            border: 1px solid rgba(73, 40, 108, 0.14);
-            border-radius: 999px;
-            background: linear-gradient(180deg, rgba(255, 206, 93, 0.98), rgba(247, 171, 38, 0.96));
-            color: var(--ink);
-            font-size: 0;
-            box-shadow: 0 6px 12px rgba(72, 40, 108, 0.1);
-            cursor: pointer;
-            transform: translateY(-50%);
-            transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease, color 180ms ease;
-        }
-
-        .password-toggle::before {
-            content: "";
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            width: 16px;
-            height: 10px;
-            border: 1.8px solid currentColor;
-            border-radius: 999px;
-            transform: translate(-50%, -50%);
-        }
-
-        .password-toggle::after {
-            content: "";
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            width: 4px;
-            height: 4px;
-            border-radius: 999px;
-            background: currentColor;
-            transform: translate(-50%, -50%);
-        }
-
-        .password-toggle span {
-            position: absolute;
-            inset: 0;
-            display: block;
-        }
-
         .auth-actions {
             display: grid;
             gap: 12px;
@@ -615,28 +545,6 @@
             width: 100%;
         }
 
-        .password-toggle:hover {
-            background: linear-gradient(180deg, #ffd86e, #ffb43d);
-            box-shadow: 0 10px 18px rgba(72, 40, 108, 0.14);
-        }
-
-        .password-toggle[data-visible="true"] {
-            background: linear-gradient(180deg, rgba(120, 101, 255, 0.94), rgba(91, 68, 206, 0.96));
-            border-color: rgba(73, 40, 108, 0.24);
-            color: white;
-        }
-
-        .password-toggle[data-visible="true"] span::after {
-            content: "";
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            width: 18px;
-            height: 1.8px;
-            background: currentColor;
-            border-radius: 999px;
-            transform: translate(-50%, -50%) rotate(-28deg);
-        }
 
         .inline-check {
             display: inline-flex;
@@ -1507,21 +1415,6 @@
     <script src="{{ asset('js/app.js') }}?v={{ file_exists(public_path('js/app.js')) ? filemtime(public_path('js/app.js')) : time() }}"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('[data-password-toggle]').forEach((button) => {
-                button.addEventListener('click', () => {
-                    const target = document.getElementById(button.dataset.passwordToggle);
-
-                    if (!target) {
-                        return;
-                    }
-
-                    const isHidden = target.type === 'password';
-                    target.type = isHidden ? 'text' : 'password';
-                    button.setAttribute('aria-label', isHidden ? 'Hide password' : 'Show password');
-                    button.dataset.visible = isHidden ? 'true' : 'false';
-                });
-            });
-
             const overlay = document.querySelector('[data-system-popup-overlay]');
 
             if (overlay) {

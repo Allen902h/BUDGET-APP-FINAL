@@ -68,84 +68,6 @@
         color: rgba(47, 36, 88, 0.38);
     }
 
-    .login-card input[type="password"]::-ms-reveal,
-    .login-card input[type="password"]::-ms-clear {
-        display: none;
-    }
-
-    .login-card .password-field {
-        position: relative;
-    }
-
-    .login-card .password-field input {
-        width: 100%;
-        padding-right: 72px;
-    }
-
-    .login-card .password-toggle {
-        position: absolute;
-        right: 10px;
-        top: 50%;
-        min-width: 34px;
-        min-height: 34px;
-        padding: 0;
-        border: 1px solid rgba(73, 40, 108, 0.14);
-        border-radius: 999px;
-        background: linear-gradient(180deg, rgba(255, 206, 93, 0.98), rgba(247, 171, 38, 0.96));
-        color: var(--ink);
-        font-size: 0;
-        box-shadow: 0 6px 12px rgba(72, 40, 108, 0.1);
-        cursor: pointer;
-        transform: translateY(-50%);
-    }
-
-    .login-card .password-toggle::before {
-        content: "";
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        width: 16px;
-        height: 10px;
-        border: 1.8px solid currentColor;
-        border-radius: 999px;
-        transform: translate(-50%, -50%);
-    }
-
-    .login-card .password-toggle::after {
-        content: "";
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        width: 4px;
-        height: 4px;
-        border-radius: 999px;
-        background: currentColor;
-        transform: translate(-50%, -50%);
-    }
-
-    .login-card .password-toggle span {
-        position: absolute;
-        inset: 0;
-        display: block;
-    }
-
-    .login-card .password-toggle[data-visible="true"] {
-        background: linear-gradient(180deg, rgba(120, 101, 255, 0.94), rgba(91, 68, 206, 0.96));
-        color: white;
-    }
-
-    .login-card .password-toggle[data-visible="true"] span::after {
-        content: "";
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        width: 18px;
-        height: 1.8px;
-        background: currentColor;
-        border-radius: 999px;
-        transform: translate(-50%, -50%) rotate(-28deg);
-    }
-
     .welcome-remember {
         display: inline-flex;
         align-items: center;
@@ -573,10 +495,7 @@
             <form method="POST" action="{{ route('login.attempt') }}" class="login-card">
                 @csrf
                 <input type="email" name="email" value="{{ old('email') }}" placeholder="Email" required>
-                <div class="password-field">
-                    <input id="welcome_password" type="password" name="password" placeholder="Password" required>
-                    <button type="button" class="password-toggle" data-password-toggle="welcome_password" data-visible="false" aria-label="Show password"><span></span></button>
-                </div>
+                <input id="welcome_password" type="password" name="password" placeholder="Password" required>
                 <label class="welcome-remember">
                     <input type="checkbox" name="remember" value="1">
                     <span>Remember me</span>

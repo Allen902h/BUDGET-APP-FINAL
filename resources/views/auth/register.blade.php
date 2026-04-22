@@ -50,18 +50,12 @@
             <div class="form-grid-two">
                 <label class="field">
                     <span>Password</span>
-                    <div class="password-field">
-                        <input id="register_password" type="password" name="password" placeholder="Password" required>
-                        <button type="button" class="password-toggle" data-password-toggle="register_password" data-visible="false" aria-label="Show password"><span></span></button>
-                    </div>
+                    <input id="register_password" type="password" name="password" placeholder="Password" required>
                 </label>
 
                 <label class="field">
                     <span>Confirm Password</span>
-                    <div class="password-field">
-                        <input id="register_password_confirmation" type="password" name="password_confirmation" placeholder="Confirm password" required>
-                        <button type="button" class="password-toggle" data-password-toggle="register_password_confirmation" data-visible="false" aria-label="Show password"><span></span></button>
-                    </div>
+                    <input id="register_password_confirmation" type="password" name="password_confirmation" placeholder="Confirm password" required>
                 </label>
             </div>
 

@@ -22,7 +22,7 @@
 
             <label class="field">
                 <span>Password</span>
-                <input id="login_password" class="native-password-field" type="password" name="password" placeholder="Password" required>
+                <input id="login_password" type="password" name="password" placeholder="Password" required>
             </label>
 
             <label class="inline-check">

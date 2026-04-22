@@ -29,18 +29,12 @@
             <div class="form-grid-two">
                 <label class="field">
                     <span>New Password</span>
-                    <div class="password-field">
-                        <input id="reset_password" type="password" name="password" placeholder="New password" required>
-                        <button type="button" class="password-toggle" data-password-toggle="reset_password" data-visible="false" aria-label="Show password"><span></span></button>
-                    </div>
+                    <input id="reset_password" type="password" name="password" placeholder="New password" required>
                 </label>
 
                 <label class="field">
                     <span>Confirm Password</span>
-                    <div class="password-field">
-                        <input id="reset_password_confirmation" type="password" name="password_confirmation" placeholder="Confirm password" required>
-                        <button type="button" class="password-toggle" data-password-toggle="reset_password_confirmation" data-visible="false" aria-label="Show password"><span></span></button>
-                    </div>
+                    <input id="reset_password_confirmation" type="password" name="password_confirmation" placeholder="Confirm password" required>
                 </label>
             </div>
 
