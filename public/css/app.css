@@ -20,6 +20,16 @@
     --form-border: rgba(138, 103, 255, 0.2);
     --form-shadow: 0 12px 26px rgba(72, 40, 108, 0.08);
     --form-focus-shadow: 0 0 0 4px rgba(255, 179, 71, 0.18), 0 14px 28px rgba(138, 103, 255, 0.12);
+    --card-surface: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(255, 247, 240, 0.94));
+    --card-border: rgba(138, 103, 255, 0.14);
+    --card-shadow: 0 18px 34px rgba(72, 40, 108, 0.1);
+    --button-primary: linear-gradient(135deg, #ffb347, #ff8f3f 40%, #ff7e6b 72%, #8a67ff 100%);
+    --button-secondary: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 244, 236, 0.94));
+    --button-secondary-border: rgba(138, 103, 255, 0.18);
+    --button-secondary-text: #3d2f67;
+    --button-danger: linear-gradient(135deg, rgba(255, 236, 233, 0.98), rgba(255, 222, 214, 0.96));
+    --table-header: linear-gradient(180deg, rgba(255, 248, 241, 0.96), rgba(246, 241, 255, 0.94));
+    --table-row-hover: linear-gradient(135deg, rgba(255, 179, 71, 0.1), rgba(138, 103, 255, 0.08));
     --navy: #10263f;
     --navy-soft: #173653;
     --ok: #0f766e;
@@ -464,8 +474,8 @@ body.js-enhanced.is-routing .dashboard-shell {
     position: relative;
     border: 2px solid var(--line);
     border-radius: var(--radius);
-    background: var(--surface);
-    box-shadow: 0 24px 60px rgba(72, 40, 108, 0.14);
+    background: var(--card-surface);
+    box-shadow: var(--card-shadow);
     backdrop-filter: blur(14px);
     transition:
         transform var(--motion-base) var(--ease-standard),
@@ -620,8 +630,11 @@ h3 {
         opacity var(--motion-fast) var(--ease-standard),
         background var(--motion-fast) var(--ease-standard),
         box-shadow var(--motion-fast) var(--ease-standard),
-        border-color var(--motion-fast) var(--ease-standard);
+        border-color var(--motion-fast) var(--ease-standard),
+        color var(--motion-fast) var(--ease-standard);
     overflow: hidden;
+    font-weight: 800;
+    letter-spacing: 0.01em;
 }
 
 .primary-button::after,
@@ -642,7 +655,7 @@ h3 {
 .danger-button:hover,
 .table-action:hover {
     transform: translateY(-2px) scale(1.01);
-    box-shadow: 0 14px 26px rgba(72, 40, 108, 0.12);
+    box-shadow: 0 16px 30px rgba(72, 40, 108, 0.16);
 }
 
 .primary-button:hover::after,
@@ -662,20 +675,28 @@ h3 {
 }
 
 .primary-button {
-    background: linear-gradient(135deg, #d97706, #ea580c);
+    background: var(--button-primary);
     color: #fffdf8;
+    box-shadow: 0 16px 30px rgba(138, 103, 255, 0.2);
 }
 
 .secondary-button,
 .table-action {
-    background: rgba(255, 255, 255, 0.88);
-    border-color: rgba(73, 40, 108, 0.16);
-    color: var(--ink);
+    background: var(--button-secondary);
+    border-color: var(--button-secondary-border);
+    color: var(--button-secondary-text);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.72),
+        0 10px 20px rgba(72, 40, 108, 0.08);
 }
 
 .danger-button {
-    background: var(--danger-soft);
-    color: var(--danger);
+    background: var(--button-danger);
+    border-color: rgba(220, 38, 38, 0.14);
+    color: #c2410c;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.72),
+        0 10px 20px rgba(185, 28, 28, 0.08);
 }
 
 .full-width {
@@ -823,8 +844,10 @@ textarea:focus {
 .stat-panel {
     padding: 22px;
     border-radius: 22px;
-    border: 1px solid var(--line);
+    border: 1px solid var(--card-border);
+    background: var(--card-surface);
     animation: itemRise 620ms ease both;
+    box-shadow: 0 18px 32px rgba(72, 40, 108, 0.1);
 }
 
 .spotlight-card {
@@ -1089,6 +1112,8 @@ textarea:focus {
 table {
     width: 100%;
     border-collapse: collapse;
+    border-radius: 18px;
+    overflow: hidden;
 }
 
 th,
@@ -1104,10 +1129,20 @@ th {
     font-size: 0.83rem;
     text-transform: uppercase;
     letter-spacing: 0.08em;
+    background: var(--table-header);
 }
 
 td {
     line-height: 1.55;
+    background: rgba(255, 255, 255, 0.82);
+}
+
+tbody tr {
+    transition: background var(--motion-fast) var(--ease-standard), transform var(--motion-fast) var(--ease-standard);
+}
+
+tbody tr:hover td {
+    background: var(--table-row-hover);
 }
 
 .action-row,
@@ -1172,7 +1207,9 @@ td {
 .support-item {
     padding: 16px;
     border-radius: 18px;
-    border: 2px solid var(--line);
+    border: 1px solid var(--card-border);
+    background: var(--card-surface);
+    box-shadow: 0 14px 28px rgba(72, 40, 108, 0.08);
 }
 
 .budget-row-meta {
@@ -1182,10 +1219,10 @@ td {
 .split-panel {
     margin-top: 22px;
     padding: 28px;
-    border: 2px solid var(--line);
+    border: 1px solid var(--card-border);
     border-radius: 24px;
-    background: var(--surface);
-    box-shadow: 0 24px 60px rgba(72, 40, 108, 0.14);
+    background: var(--card-surface);
+    box-shadow: var(--card-shadow);
 }
 
 .section-heading {
