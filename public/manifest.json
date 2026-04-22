@@ -1,0 +1,17 @@
+{
+  "name": "Budget App",
+  "short_name": "Budget",
+  "description": "Bi-weekly budget tracking with cycle planning, CSV import, alerts, and offline-ready expense capture.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f4efe7",
+  "theme_color": "#10263f",
+  "icons": [
+    {
+      "src": "/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

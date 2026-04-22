@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Budget App Icon">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f766e"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="120" fill="url(#bg)"/>
+  <path d="M132 171c0-22 18-40 40-40h168c22 0 40 18 40 40v170c0 22-18 40-40 40H172c-22 0-40-18-40-40V171Z" fill="#fffaf5" opacity=".95"/>
+  <path d="M176 216h160M176 268h100M176 320h62" stroke="#10263f" stroke-width="28" stroke-linecap="round"/>
+  <circle cx="356" cy="320" r="38" fill="#f59e0b"/>
+</svg>
