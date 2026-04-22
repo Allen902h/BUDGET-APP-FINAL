@@ -131,21 +131,28 @@ class DashboardController extends Controller
 
     protected function filterCycles($user, Request $request)
     {
-        return $user->incomeCycles()
+        $cycles = $user->incomeCycles()
             ->withCount('transactions')
-            ->when($request->filled('cycles_search'), function ($query) use ($request) {
-                $needle = trim((string) $request->cycles_search);
-
-                $query->where(function ($inner) use ($needle) {
-                    $inner->whereRaw("DATE_FORMAT(start_date, '%Y-%m-%d') like ?", ["%{$needle}%"])
-                        ->orWhereRaw("DATE_FORMAT(end_date, '%Y-%m-%d') like ?", ["%{$needle}%"])
-                        ->orWhere('amount', 'like', "%{$needle}%");
-                });
-            })
             ->when($request->filled('cycles_date_from'), fn ($query) => $query->whereDate('start_date', '>=', $request->cycles_date_from))
             ->when($request->filled('cycles_date_to'), fn ($query) => $query->whereDate('end_date', '<=', $request->cycles_date_to))
             ->orderByDesc('start_date')
             ->get();
+
+        if (! $request->filled('cycles_search')) {
+            return $cycles;
+        }
+
+        $needle = mb_strtolower(trim((string) $request->cycles_search));
+
+        return $cycles->filter(function ($cycle) use ($needle) {
+            $startDate = mb_strtolower($cycle->start_date?->format('Y-m-d') ?? '');
+            $endDate = mb_strtolower($cycle->end_date?->format('Y-m-d') ?? '');
+            $amount = mb_strtolower(number_format((float) $cycle->amount, 2, '.', ''));
+
+            return str_contains($startDate, $needle)
+                || str_contains($endDate, $needle)
+                || str_contains($amount, $needle);
+        })->values();
     }
 
     protected function filterCategories($user, Request $request)

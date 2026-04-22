@@ -438,6 +438,7 @@ function bindTransactionTypeFields() {
         const typeSelect = form.querySelector('.transaction-type-select');
         const categoryField = form.querySelector('.transaction-category-field');
         const categorySelect = categoryField?.querySelector('select[name="category_id"]');
+        const typeHint = form.querySelector('[data-transaction-type-hint]');
 
         if (!typeSelect || !categoryField || !categorySelect) {
             return;
@@ -447,6 +448,12 @@ function bindTransactionTypeFields() {
             const isExpense = typeSelect.value === 'expense';
             categoryField.style.display = isExpense ? '' : 'none';
             categorySelect.required = isExpense;
+
+            if (typeHint) {
+                typeHint.textContent = isExpense
+                    ? 'Choose expense when money goes out. Category is required so reports can group the spending correctly.'
+                    : 'Choose income when money comes in. Category becomes optional because this entry adds to available funds.';
+            }
 
             if (!isExpense) {
                 categorySelect.value = '';
@@ -609,7 +616,7 @@ function bindDestructivePrompts() {
     document.querySelectorAll('form[data-delete-confirm]').forEach((form) => {
         form.addEventListener('submit', (event) => {
             const label = form.dataset.deleteLabel || 'this item';
-            const confirmation = window.prompt(`Type DELETE to remove ${label}.`);
+            const confirmation = window.prompt(`Type DELETE to remove ${label}. This helps prevent accidental deletion.`);
 
             if (confirmation !== 'DELETE') {
                 event.preventDefault();

@@ -70,6 +70,8 @@ class DashboardFeaturesTest extends TestCase
         $response->assertSee('Savings progress');
         $response->assertSee('Transaction history');
         $response->assertSee('Download Excel Report');
+        $response->assertSee('Quick start checklist');
+        $response->assertSee('View Reports & Alerts', false);
         $response->assertSee('Rent is due in');
     }
 

@@ -23,6 +23,18 @@
         : (file_exists(public_path('images/wowlogo.png')) ? 'images/wowlogo.png' : 'icons/icon.svg');
     $brandLogo = asset($brandLogoFile).'?v='.(file_exists(public_path($brandLogoFile)) ? filemtime(public_path($brandLogoFile)) : time());
     $profilePhotoUrl = $user->profile_photo_path ? asset($user->profile_photo_path).'?v='.(file_exists(public_path($user->profile_photo_path)) ? filemtime(public_path($user->profile_photo_path)) : time()) : null;
+    $hasCycle = (bool) $cycle;
+    $hasCategories = $allCategories->isNotEmpty();
+    $hasTransactions = $filteredTransactions->isNotEmpty();
+    $hasGoals = $allSavingsGoals->isNotEmpty();
+    $setupCompletedCount = collect([$hasCycle, $hasCategories, $hasTransactions, $hasGoals])->filter()->count();
+    $nextStepLabel = ! $hasCycle
+        ? 'Create your first income cycle'
+        : (! $hasCategories
+            ? 'Set up categories and bill limits'
+            : (! $hasTransactions
+                ? 'Record your first income or expense'
+                : (! $hasGoals ? 'Add a savings goal' : 'Review reports and fine-tune your budget')));
 @endphp
 
 <style>
@@ -622,6 +634,128 @@
         display: grid;
         grid-template-columns: repeat(4, minmax(0, 1fr));
         gap: 16px;
+    }
+
+    .field-hint {
+        display: block;
+        margin-top: 6px;
+        color: rgba(30, 41, 59, 0.62);
+        font-size: 0.84rem;
+        line-height: 1.5;
+    }
+
+    .overview-guide {
+        display: grid;
+        grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+        gap: 18px;
+    }
+
+    .overview-actions {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-top: 20px;
+    }
+
+    .quick-start-card {
+        padding: 20px;
+        border-radius: 22px;
+        border: 1px solid rgba(120, 101, 255, 0.12);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(255, 249, 243, 0.94));
+        box-shadow: 0 12px 28px rgba(72, 40, 108, 0.08);
+    }
+
+    .quick-start-card h3,
+    .quick-start-card p {
+        margin: 0;
+    }
+
+    .quick-start-card p {
+        margin-top: 8px;
+        color: rgba(30, 41, 59, 0.68);
+        line-height: 1.65;
+    }
+
+    .quick-start-progress {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 14px;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: rgba(255, 152, 0, 0.12);
+        color: #8a4b00;
+        font-size: 0.84rem;
+        font-weight: 700;
+    }
+
+    .quick-start-list {
+        display: grid;
+        gap: 12px;
+        margin-top: 18px;
+    }
+
+    .quick-start-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 14px 16px;
+        border-radius: 18px;
+        background: rgba(248, 244, 255, 0.9);
+        border: 1px solid rgba(120, 101, 255, 0.1);
+    }
+
+    .quick-start-item.is-complete {
+        background: rgba(236, 253, 245, 0.92);
+        border-color: rgba(15, 118, 110, 0.14);
+    }
+
+    .quick-start-marker {
+        width: 28px;
+        height: 28px;
+        border-radius: 999px;
+        display: grid;
+        place-items: center;
+        flex-shrink: 0;
+        font-size: 0.82rem;
+        font-weight: 900;
+        color: #8a4b00;
+        background: rgba(255, 152, 0, 0.18);
+    }
+
+    .quick-start-item.is-complete .quick-start-marker {
+        color: #0f766e;
+        background: rgba(15, 118, 110, 0.14);
+    }
+
+    .quick-start-copy strong,
+    .quick-start-copy span {
+        display: block;
+    }
+
+    .quick-start-copy span {
+        margin-top: 4px;
+        color: rgba(30, 41, 59, 0.66);
+        line-height: 1.55;
+    }
+
+    .helper-callout {
+        padding: 18px;
+        border-radius: 20px;
+        border: 1px solid rgba(120, 101, 255, 0.12);
+        background: linear-gradient(180deg, rgba(255, 247, 238, 0.96), rgba(255, 255, 255, 0.98));
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    }
+
+    .helper-callout strong,
+    .helper-callout span {
+        display: block;
+    }
+
+    .helper-callout span {
+        margin-top: 8px;
+        color: rgba(30, 41, 59, 0.68);
+        line-height: 1.6;
     }
 
     .dashboard-kpi {
@@ -1599,6 +1733,7 @@
         .goals-grid,
         .settings-grid,
         .overview-grid,
+        .overview-guide,
         .insights-grid {
             grid-template-columns: repeat(2, minmax(0, 1fr));
         }
@@ -1659,6 +1794,7 @@
         .goals-grid,
         .settings-grid,
         .overview-grid,
+        .overview-guide,
         .insights-grid,
         .filter-grid,
         .history-search-row,
@@ -2058,7 +2194,7 @@
         </div>
 
         <div class="sidebar-footer-note">
-            Use the sidebar to jump between sections quickly. Your reports stay separate so the planner area stays easier to reach.
+            Use the sidebar to jump by task. Next best step: <strong style="display:block;margin-top:6px;color:#fffaf5;">{{ $nextStepLabel }}</strong>
         </div>
 
     </aside>
@@ -2067,7 +2203,7 @@
         <div class="dashboard-main-header">
             <div>
                 <h1>Budget Workspace</h1>
-                <p>Budget tracking, reports, categories, alerts, and savings controls in one polished control center.</p>
+                <p>One guided workspace for recording money, checking budget health, and seeing exactly what to do next.</p>
             </div>
 
             <div class="header-actions">
@@ -2084,7 +2220,7 @@
                         </select>
                     </label>
                 </form>
-                <button type="button" class="insights-toggle" data-insights-open>Open Reports</button>
+                <button type="button" class="insights-toggle" data-insights-open>View Reports & Alerts</button>
                 <a href="{{ route('dashboard.report.excel') }}" class="secondary-button">Download Excel Report</a>
             </div>
         </div>
@@ -2093,48 +2229,95 @@
             @if($cycle && $summary)
                 <div class="overview-grid">
                     <article class="overview-card">
-                        <span>Active cycle</span>
+                        <span>Current budget period</span>
                         <strong>{{ $cycle->start_date->format('M d') }} - {{ $cycle->end_date->format('M d') }}</strong>
-                        <small>{{ number_format($cycle->amount, 2) }} planned income</small>
+                        <small>{{ number_format($cycle->amount, 2) }} expected income for this period</small>
                     </article>
                     <article class="overview-card">
-                        <span>Transactions</span>
+                        <span>Recorded entries</span>
                         <strong>{{ $filteredTransactions->count() }}</strong>
-                        <small>Visible records in the selected cycle</small>
+                        <small>Income and expense records saved in this cycle</small>
                     </article>
                     <article class="overview-card">
                         <span>Categories</span>
                         <strong>{{ $allCategories->count() }}</strong>
-                        <small>Budget groups and bill categories ready</small>
+                        <small>Budget buckets and bill types currently set up</small>
                     </article>
                     <article class="overview-card">
-                        <span>Alerts</span>
+                        <span>Alerts to review</span>
                         <strong>{{ ($budgetAlerts->count() ?? 0) + ($dueBillAlerts->count() ?? 0) + (!empty($summary['warning']) ? 1 : 0) }}</strong>
-                        <small>Open Reports for charts, alerts, and statistics</small>
+                        <small>Open reports for warnings, reminders, and trends</small>
                     </article>
                 </div>
 
-                <article class="dashboard-empty">
-                    <span class="eyebrow">Overview</span>
-                    <h2 style="margin-top:14px;">Each section is now separated inside the dashboard.</h2>
-                    <p>Use the sidebar to switch between Planner, History, Goals, and Settings. Open the Reports button when you want charts, alerts, and statistics without making the page too long.</p>
-                </article>
+                <div class="overview-guide">
+                    <article class="dashboard-empty">
+                        <span class="eyebrow">Overview</span>
+                        <h2 style="margin-top:14px;">Mas klaro na ang next step mo sa dashboard.</h2>
+                        <p>Planner para magdagdag ng cycle, categories, at entries. History para maghanap ng nakaraang galaw. Goals para sa ipon. Settings para sa account at budget rules.</p>
+                        <div class="overview-actions">
+                            <a href="#planner" class="primary-button dashboard-nav-link" data-target="planner">Go To Planner</a>
+                            <a href="#history" class="secondary-button dashboard-nav-link" data-target="history">Review History</a>
+                            <button type="button" class="secondary-button" data-insights-open>Open Reports</button>
+                        </div>
+                    </article>
+
+                    <aside class="quick-start-card">
+                        <h3>Quick start checklist</h3>
+                        <p>Para hindi manghula ang user, nakaayos na ang importanteng setup sa simple na sunod-sunod na steps.</p>
+                        <span class="quick-start-progress">{{ $setupCompletedCount }}/4 steps completed</span>
+                        <div class="quick-start-list">
+                            <div class="quick-start-item {{ $hasCycle ? 'is-complete' : '' }}">
+                                <span class="quick-start-marker">{{ $hasCycle ? 'OK' : '1' }}</span>
+                                <div class="quick-start-copy">
+                                    <strong>Create a cycle</strong>
+                                    <span>Define the covered dates and planned income for the current budget period.</span>
+                                </div>
+                            </div>
+                            <div class="quick-start-item {{ $hasCategories ? 'is-complete' : '' }}">
+                                <span class="quick-start-marker">{{ $hasCategories ? 'OK' : '2' }}</span>
+                                <div class="quick-start-copy">
+                                    <strong>Add categories</strong>
+                                    <span>Separate bills, food, rent, transport, and other spending groups.</span>
+                                </div>
+                            </div>
+                            <div class="quick-start-item {{ $hasTransactions ? 'is-complete' : '' }}">
+                                <span class="quick-start-marker">{{ $hasTransactions ? 'OK' : '3' }}</span>
+                                <div class="quick-start-copy">
+                                    <strong>Record entries</strong>
+                                    <span>Save actual income and expenses so the reports become meaningful.</span>
+                                </div>
+                            </div>
+                            <div class="quick-start-item {{ $hasGoals ? 'is-complete' : '' }}">
+                                <span class="quick-start-marker">{{ $hasGoals ? 'OK' : '4' }}</span>
+                                <div class="quick-start-copy">
+                                    <strong>Track savings</strong>
+                                    <span>Add at least one savings goal to guide decisions beyond daily expenses.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
             @else
                 <div class="dashboard-empty">
                     <span class="eyebrow">Start Here</span>
                     <h2 style="margin-top:14px;">No cycle exists yet.</h2>
-                    <p>Create your first income cycle in Planner to unlock transaction tracking, reports, alerts, goals, and the rest of the budget tools.</p>
+                    <p>Create your first income cycle in Planner so users immediately know the covered dates, available budget, and where new entries belong.</p>
                 </div>
             @endif
         </section>
 
         <section class="dashboard-panel-section" id="planner">
+            <div class="helper-callout">
+                <strong>Recommended flow inside Planner</strong>
+                <span>1. Create a cycle. 2. Add categories. 3. Save income and expenses. Kapag may laman na ito, mas magiging kapaki-pakinabang ang reports at alerts.</span>
+            </div>
             <div class="board-forms">
             <article class="board-panel">
                 <div class="board-panel-header">
                     <div>
                         <h2>Create Income Cycle</h2>
-                        <p>Set the main pay period for reporting and unlock the full dashboard.</p>
+                        <p>Set the pay period first so every entry, report, and reminder has the right date range.</p>
                     </div>
                 </div>
                 <form method="POST" action="{{ route('income-cycles.store') }}" class="stack-form compact-form">
@@ -2143,14 +2326,17 @@
                     <label class="field">
                         <span>Income amount</span>
                         <input type="number" step="0.01" name="amount" placeholder="6000.00" required>
+                        <small class="field-hint">Use the total money expected to come in during this cycle.</small>
                     </label>
                     <label class="field">
                         <span>Start date</span>
                         <input type="date" name="start_date" required>
+                        <small class="field-hint">Example: salary date or the first day you want to track.</small>
                     </label>
                     <label class="field">
                         <span>End date</span>
                         <input type="date" name="end_date" required>
+                        <small class="field-hint">The dashboard will group reports and entries within these dates.</small>
                     </label>
                     <button type="submit" class="primary-button full-width">Create Cycle</button>
                 </form>
@@ -2161,7 +2347,7 @@
                     <div class="board-panel-header">
                         <div>
                             <h2>Add income or expense</h2>
-                            <p>Track every entry from one compact form.</p>
+                            <p>One simple form for every cash-in and cash-out entry, para hindi na paikot-ikot ang user.</p>
                         </div>
                     </div>
                     <form method="POST" action="{{ route('transactions.store') }}" class="stack-form compact-form offline-transaction-form" data-sync-url="{{ route('transactions.sync') }}">
@@ -2174,6 +2360,7 @@
                                 <option value="expense">Expense</option>
                                 <option value="income">Income</option>
                             </select>
+                            <small class="field-hint" data-transaction-type-hint>Choose expense for spending, or income for money received.</small>
                         </label>
                         <label class="field transaction-category-field">
                             <span>Category</span>
@@ -2183,18 +2370,22 @@
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                                 @endforeach
                             </select>
+                            <small class="field-hint">Required for expenses so reports know where the money went.</small>
                         </label>
                         <label class="field">
                             <span>Amount</span>
                             <input type="number" step="0.01" name="amount" placeholder="65.20" required>
+                            <small class="field-hint">Enter the exact amount paid or received.</small>
                         </label>
                         <label class="field">
                             <span>Timestamp</span>
                             <input type="datetime-local" name="timestamp" value="{{ now()->format('Y-m-d\TH:i') }}">
+                            <small class="field-hint">You can log a past transaction by changing the date and time here.</small>
                         </label>
                         <label class="field">
                             <span>Note</span>
                             <textarea name="note" placeholder="Salary, groceries, rent, tuition, fuel."></textarea>
+                            <small class="field-hint">Optional, but helpful when users check history later.</small>
                         </label>
                         <button type="submit" class="primary-button full-width">Save Entry</button>
                     </form>
@@ -2228,7 +2419,7 @@
                 <div class="board-panel-header">
                     <div>
                         <h2>Category + Budget Setup</h2>
-                        <p>Maintain limits and due dates.</p>
+                        <p>Set spending groups, bill due dates, and limits so the reports become easier to understand.</p>
                     </div>
                 </div>
                 <form method="POST" action="{{ route('categories.store') }}" class="stack-form compact-form">
@@ -2237,14 +2428,17 @@
                     <label class="field">
                         <span>Category name</span>
                         <input type="text" name="name" placeholder="Food, Rent, Bills" required>
+                        <small class="field-hint">Use simple names users will instantly recognize in reports and history.</small>
                     </label>
                     <label class="field">
                         <span>Budget limit</span>
                         <input type="number" step="0.01" name="budget_limit" placeholder="800.00">
+                        <small class="field-hint">Optional, but useful if you want overspending alerts.</small>
                     </label>
                     <label class="field">
                         <span>Bill due day</span>
                         <input type="number" min="1" max="31" name="due_day" placeholder="15">
+                        <small class="field-hint">Add this for bills that repeat on a certain day every month.</small>
                     </label>
                     <label class="inline-check">
                         <input type="checkbox" name="is_fixed" value="1">
@@ -2256,13 +2450,13 @@
             </div>
 
         @if($cycle && $summary)
-            <article class="board-panel">
-                <div class="board-panel-header">
-                    <div>
-                        <h2>Income Cycle Management</h2>
-                        <p>Full CRUD for your budgeting cycles.</p>
+                <article class="board-panel">
+                    <div class="board-panel-header">
+                        <div>
+                            <h2>Income Cycle Management</h2>
+                            <p>Edit old cycles when dates or planned income were entered incorrectly.</p>
+                        </div>
                     </div>
-                </div>
                 <form method="GET" action="{{ route('dashboard') }}" class="history-toolbar" style="margin-bottom:16px;">
                     @if($cycle)
                         <input type="hidden" name="cycle" value="{{ $cycle->id }}">
@@ -2317,7 +2511,7 @@
                                             <input type="date" name="end_date" value="{{ $item->end_date->format('Y-m-d') }}" required>
                                             <button type="submit" class="table-action">Update</button>
                                         </form>
-                                        <form method="POST" action="{{ route('income-cycles.destroy', $item) }}" onsubmit="return confirm('Delete this income cycle?');">
+                                        <form method="POST" action="{{ route('income-cycles.destroy', $item) }}" data-delete-confirm data-delete-label="income cycle {{ $item->start_date->format('M d, Y') }} to {{ $item->end_date->format('M d, Y') }}">
                                             @csrf
                                             @method('DELETE')
                                             <input type="hidden" name="return_to" value="{{ route('dashboard', ['cycle' => $cycle?->id]) }}#planner">
@@ -2343,7 +2537,7 @@
                 <div class="board-panel-header">
                     <div>
                         <h2>Transaction history</h2>
-                        <p>Search and filter full income and expense records.</p>
+                        <p>Search by keyword, amount, date, or category when users need to verify past activity.</p>
                     </div>
                 </div>
 
@@ -2475,7 +2669,7 @@
                     <div class="board-panel-header">
                         <div>
                             <h2>Create Savings Goal</h2>
-                            <p>Emergency fund, travel, school fees, and more.</p>
+                            <p>Create a clear target so users know what they are saving for and how much is left.</p>
                         </div>
                     </div>
                     <form method="POST" action="{{ route('savings-goals.store') }}" class="stack-form compact-form">
@@ -2484,14 +2678,17 @@
                         <label class="field">
                             <span>Goal name</span>
                             <input type="text" name="name" placeholder="Emergency fund" required>
+                            <small class="field-hint">Use a specific goal name like tuition, emergency fund, or travel.</small>
                         </label>
                         <label class="field">
                             <span>Target amount</span>
                             <input type="number" step="0.01" min="0.01" inputmode="decimal" name="target_amount" placeholder="{{ $currencySymbol }}1,000.00" required>
+                            <small class="field-hint">The system will compare this against your saved amount automatically.</small>
                         </label>
                         <label class="field">
                             <span>Current saved</span>
                             <input type="number" step="0.01" min="0" inputmode="decimal" name="current_amount" value="0">
+                            <small class="field-hint">Start with zero if you are still beginning this goal.</small>
                         </label>
                         <label class="field">
                             <span>Target date</span>
@@ -2715,7 +2912,7 @@
                     <div class="board-panel-header">
                         <div>
                             <h2>Edit Profile</h2>
-                            <p>Update your picture, account details, and password in one place.</p>
+                            <p>Keep account details and security settings in one easy-to-find place.</p>
                         </div>
                     </div>
 
@@ -2796,7 +2993,7 @@
                     <div class="board-panel-header">
                         <div>
                             <h2>Account Budget Settings</h2>
-                            <p>Set currency, monthly limits, and savings target.</p>
+                            <p>These settings control how totals, limits, and savings guidance are shown across the app.</p>
                         </div>
                     </div>
                     <form method="POST" action="{{ route('dashboard.settings.update') }}" class="stack-form compact-form settings-compact-form">
@@ -2811,14 +3008,17 @@
                                     </option>
                                 @endforeach
                             </select>
+                            <small class="field-hint">All amounts around the dashboard will use this currency symbol.</small>
                         </label>
                         <label class="field">
                             <span>Savings goal %</span>
                             <input type="number" step="0.01" min="0" max="100" name="savings_goal_percentage" value="{{ old('savings_goal_percentage', $user->savings_goal_percentage) }}" required>
+                            <small class="field-hint">Example: 20 means the app will guide users to save 20% of available income.</small>
                         </label>
                         <label class="field">
                             <span>Monthly budget limit</span>
                             <input type="number" step="0.01" min="0" name="monthly_budget_limit" value="{{ old('monthly_budget_limit', $user->monthly_budget_limit) }}" placeholder="5000.00">
+                            <small class="field-hint">Set this if you want quick warnings when spending is getting too high.</small>
                         </label>
                         <button type="submit" class="secondary-button settings-submit">Save Settings</button>
                     </form>
@@ -2828,7 +3028,7 @@
                     <div class="board-panel-header">
                         <div>
                             <h2>Category Settings</h2>
-                            <p>Edit budgets, bill days, and category types.</p>
+                            <p>Review existing categories here when users need to clean up names, limits, or due dates.</p>
                         </div>
                     </div>
                     <form method="GET" action="{{ route('dashboard') }}" class="history-toolbar" style="margin-bottom:16px;">
@@ -2887,7 +3087,7 @@
                                                 </label>
                                                 <button type="submit" class="table-action">Update</button>
                                             </form>
-                                            <form method="POST" action="{{ route('categories.destroy', $category) }}" onsubmit="return confirm('Delete this category?');" class="category-delete-form">
+                                            <form method="POST" action="{{ route('categories.destroy', $category) }}" class="category-delete-form" data-delete-confirm data-delete-label="category {{ $category->name }}">
                                                 @csrf
                                                 @method('DELETE')
                                                 <input type="hidden" name="return_to" value="{{ route('dashboard', ['cycle' => $cycle?->id]) }}#settings">
