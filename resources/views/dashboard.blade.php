@@ -3095,8 +3095,29 @@
         const insightsBackdrop = document.querySelector('[data-insights-backdrop]');
         const insightsOpenButtons = [...document.querySelectorAll('[data-insights-open]')];
         const insightsCloseButtons = [...document.querySelectorAll('[data-insights-close]')];
+        const mobilePanelMedia = window.matchMedia('(max-width: 900px)');
 
-        const activatePanel = (targetId, updateHash = true) => {
+        const scrollPanelIntoView = (panel) => {
+            if (!panel || !mobilePanelMedia.matches) {
+                return;
+            }
+
+            const preferredTarget = panel.querySelector(
+                '.field input:not([type="hidden"]):not([disabled]), .field select:not([disabled]), .field textarea:not([disabled]), button[type="submit"]:not([disabled])'
+            );
+            const fallbackTarget = panel.querySelector('.board-panel, .overview-card, .board-panel-header, h2, h1');
+            const scrollTarget = preferredTarget || fallbackTarget || panel;
+
+            window.requestAnimationFrame(() => {
+                scrollTarget.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start',
+                    inline: 'nearest',
+                });
+            });
+        };
+
+        const activatePanel = (targetId, updateHash = true, shouldScroll = true) => {
             const targetPanel = document.getElementById(targetId);
 
             if (!targetPanel) {
@@ -3119,6 +3140,10 @@
 
             if (updateHash) {
                 window.history.replaceState(null, '', `#${targetId}`);
+            }
+
+            if (shouldScroll) {
+                scrollPanelIntoView(targetPanel);
             }
         };
 
@@ -3176,7 +3201,8 @@
         }
 
         const initialTarget = window.location.hash.replace('#', '') || storedTarget || 'overview';
-        activatePanel(initialTarget, false);
+        const shouldScrollInitialPanel = window.location.hash.length > 1;
+        activatePanel(initialTarget, false, shouldScrollInitialPanel);
 
     });
 </script>
