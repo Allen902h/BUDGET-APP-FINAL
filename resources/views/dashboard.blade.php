@@ -535,9 +535,9 @@
         border-radius: 18px;
         background: rgba(255, 255, 255, 0.08);
         border: 1px dashed rgba(255, 255, 255, 0.18);
-        color: rgba(248, 250, 252, 0.76);
-        font-size: 0.86rem;
-        line-height: 1.55;
+        color: rgba(248, 250, 252, 0.88);
+        font-size: 0.92rem;
+        line-height: 1.65;
     }
 
     .dashboard-main {
@@ -587,7 +587,9 @@
 
     .dashboard-main-header p {
         margin: 6px 0 0;
-        color: rgba(30, 41, 59, 0.68);
+        color: rgba(30, 41, 59, 0.8);
+        font-size: 0.98rem;
+        line-height: 1.6;
     }
 
     .header-actions {
@@ -639,9 +641,9 @@
     .field-hint {
         display: block;
         margin-top: 6px;
-        color: rgba(30, 41, 59, 0.62);
-        font-size: 0.84rem;
-        line-height: 1.5;
+        color: rgba(30, 41, 59, 0.78);
+        font-size: 0.87rem;
+        line-height: 1.6;
     }
 
     .overview-guide {
@@ -735,8 +737,8 @@
 
     .quick-start-copy span {
         margin-top: 4px;
-        color: rgba(30, 41, 59, 0.66);
-        line-height: 1.55;
+        color: rgba(30, 41, 59, 0.78);
+        line-height: 1.6;
     }
 
     .helper-callout {
@@ -754,8 +756,8 @@
 
     .helper-callout span {
         margin-top: 8px;
-        color: rgba(30, 41, 59, 0.68);
-        line-height: 1.6;
+        color: rgba(30, 41, 59, 0.8);
+        line-height: 1.65;
     }
 
     .dashboard-kpi {
@@ -867,15 +869,17 @@
     }
 
     .board-panel-header h2 {
-        font-size: 1.08rem;
+        font-size: 1.18rem;
         letter-spacing: -0.02em;
         color: #1e293b;
+        line-height: 1.3;
     }
 
     .board-panel-header p {
         margin: 4px 0 0;
-        color: rgba(30, 41, 59, 0.62);
-        font-size: 0.86rem;
+        color: rgba(30, 41, 59, 0.8);
+        font-size: 0.93rem;
+        line-height: 1.6;
     }
 
     .board-panel canvas {
@@ -933,14 +937,16 @@
         display: block;
         font-size: 0.95rem;
         color: #1e293b;
+        line-height: 1.35;
     }
 
     .alert-row span,
     .compact-row span {
         display: block;
         margin-top: 4px;
-        color: rgba(30, 41, 59, 0.62);
-        font-size: 0.84rem;
+        color: rgba(30, 41, 59, 0.8);
+        font-size: 0.89rem;
+        line-height: 1.6;
     }
 
     .board-forms {
@@ -1402,8 +1408,9 @@
 
     .goal-helper-text {
         margin-top: 6px;
-        color: rgba(27, 35, 64, 0.78);
-        font-size: 0.8rem;
+        color: rgba(27, 35, 64, 0.84);
+        font-size: 0.86rem;
+        line-height: 1.55;
     }
 
     .goal-warning {
@@ -1451,6 +1458,12 @@
         box-shadow: 0 16px 28px rgba(72, 40, 108, 0.1);
     }
 
+    .dashboard-empty p {
+        color: rgba(27, 35, 64, 0.82);
+        font-size: 0.98rem;
+        line-height: 1.7;
+    }
+
     .overview-grid {
         display: grid;
         grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -1480,8 +1493,9 @@
 
     .overview-card span {
         display: block;
-        color: rgba(27, 35, 64, 0.62);
-        font-size: 0.82rem;
+        color: rgba(27, 35, 64, 0.74);
+        font-size: 0.88rem;
+        font-weight: 700;
     }
 
     .overview-card strong {
@@ -1494,7 +1508,9 @@
     .overview-card small {
         display: block;
         margin-top: 10px;
-        color: rgba(27, 35, 64, 0.62);
+        color: rgba(27, 35, 64, 0.78);
+        font-size: 0.9rem;
+        line-height: 1.6;
     }
 
     .table-wrap {
@@ -2203,7 +2219,7 @@
         <div class="dashboard-main-header">
             <div>
                 <h1>Budget Workspace</h1>
-                <p>One guided workspace for recording money, checking budget health, and seeing exactly what to do next.</p>
+                <p>Record money, check your budget, and see your next step in one clear workspace.</p>
             </div>
 
             <div class="header-actions">
@@ -2253,8 +2269,8 @@
                 <div class="overview-guide">
                     <article class="dashboard-empty">
                         <span class="eyebrow">Overview</span>
-                        <h2 style="margin-top:14px;">Mas klaro na ang next step mo sa dashboard.</h2>
-                        <p>Planner para magdagdag ng cycle, categories, at entries. History para maghanap ng nakaraang galaw. Goals para sa ipon. Settings para sa account at budget rules.</p>
+                        <h2 style="margin-top:14px;">Mas madaling sundan ang dashboard.</h2>
+                        <p>Planner para maglagay ng cycle, categories, at entries. History para mag-check ng past records. Goals para sa ipon. Settings para sa account at budget rules.</p>
                         <div class="overview-actions">
                             <a href="#planner" class="primary-button dashboard-nav-link" data-target="planner">Go To Planner</a>
                             <a href="#history" class="secondary-button dashboard-nav-link" data-target="history">Review History</a>
@@ -2264,7 +2280,7 @@
 
                     <aside class="quick-start-card">
                         <h3>Quick start checklist</h3>
-                        <p>Para hindi manghula ang user, nakaayos na ang importanteng setup sa simple na sunod-sunod na steps.</p>
+                        <p>Nakaayos ang setup sa simple at sunod-sunod na steps para hindi malito ang user.</p>
                         <span class="quick-start-progress">{{ $setupCompletedCount }}/4 steps completed</span>
                         <div class="quick-start-list">
                             <div class="quick-start-item {{ $hasCycle ? 'is-complete' : '' }}">
@@ -2317,7 +2333,7 @@
                 <div class="board-panel-header">
                     <div>
                         <h2>Create Income Cycle</h2>
-                        <p>Set the pay period first so every entry, report, and reminder has the right date range.</p>
+                        <p>Gumawa muna ng cycle para alam ng system kung anong dates ang sakop ng budget.</p>
                     </div>
                 </div>
                 <form method="POST" action="{{ route('income-cycles.store') }}" class="stack-form compact-form">
@@ -2347,7 +2363,7 @@
                     <div class="board-panel-header">
                         <div>
                             <h2>Add income or expense</h2>
-                            <p>One simple form for every cash-in and cash-out entry, para hindi na paikot-ikot ang user.</p>
+                            <p>Isang form lang para sa lahat ng cash-in at cash-out entries.</p>
                         </div>
                     </div>
                     <form method="POST" action="{{ route('transactions.store') }}" class="stack-form compact-form offline-transaction-form" data-sync-url="{{ route('transactions.sync') }}">
@@ -2419,7 +2435,7 @@
                 <div class="board-panel-header">
                     <div>
                         <h2>Category + Budget Setup</h2>
-                        <p>Set spending groups, bill due dates, and limits so the reports become easier to understand.</p>
+                        <p>Ayusin dito ang spending groups, bill due dates, at spending limits.</p>
                     </div>
                 </div>
                 <form method="POST" action="{{ route('categories.store') }}" class="stack-form compact-form">
@@ -2537,7 +2553,7 @@
                 <div class="board-panel-header">
                     <div>
                         <h2>Transaction history</h2>
-                        <p>Search by keyword, amount, date, or category when users need to verify past activity.</p>
+                        <p>Hanapin ang past records gamit ang keyword, amount, date, o category.</p>
                     </div>
                 </div>
 
@@ -2669,7 +2685,7 @@
                     <div class="board-panel-header">
                         <div>
                             <h2>Create Savings Goal</h2>
-                            <p>Create a clear target so users know what they are saving for and how much is left.</p>
+                            <p>Maglagay ng malinaw na savings target at progress.</p>
                         </div>
                     </div>
                     <form method="POST" action="{{ route('savings-goals.store') }}" class="stack-form compact-form">
@@ -2912,7 +2928,7 @@
                     <div class="board-panel-header">
                         <div>
                             <h2>Edit Profile</h2>
-                            <p>Keep account details and security settings in one easy-to-find place.</p>
+                            <p>Dito ina-update ang account details, photo, at password.</p>
                         </div>
                     </div>
 
@@ -2993,7 +3009,7 @@
                     <div class="board-panel-header">
                         <div>
                             <h2>Account Budget Settings</h2>
-                            <p>These settings control how totals, limits, and savings guidance are shown across the app.</p>
+                            <p>Kontrolado rito ang currency, limits, at savings guidance ng buong app.</p>
                         </div>
                     </div>
                     <form method="POST" action="{{ route('dashboard.settings.update') }}" class="stack-form compact-form settings-compact-form">
@@ -3028,7 +3044,7 @@
                     <div class="board-panel-header">
                         <div>
                             <h2>Category Settings</h2>
-                            <p>Review existing categories here when users need to clean up names, limits, or due dates.</p>
+                            <p>I-review at ayusin dito ang category names, limits, at due dates.</p>
                         </div>
                     </div>
                     <form method="GET" action="{{ route('dashboard') }}" class="history-toolbar" style="margin-bottom:16px;">

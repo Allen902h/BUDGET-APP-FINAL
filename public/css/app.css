@@ -5,7 +5,7 @@
     --surface-strong: rgba(255, 255, 255, 0.18);
     --line: rgba(255, 255, 255, 0.20);
     --ink: #2f2458;
-    --muted: rgba(47, 36, 88, 0.72);
+    --muted: rgba(47, 36, 88, 0.82);
     --accent: #d97706;
     --accent-deep: #92400e;
     --accent-soft: rgba(217, 119, 6, 0.14);
@@ -38,6 +38,7 @@
 
 html {
     scroll-behavior: smooth;
+    text-size-adjust: 100%;
 }
 
 body {
@@ -45,6 +46,8 @@ body {
     min-height: 100vh;
     color: var(--ink);
     font-family: "Segoe UI Variable Text", "Aptos", "Trebuchet MS", sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
     background:
         linear-gradient(135deg, rgba(255, 205, 84, 0.16), transparent 30%),
         linear-gradient(315deg, rgba(122, 101, 255, 0.18), transparent 26%),
@@ -558,11 +561,13 @@ h1 {
 h2 {
     margin: 0;
     font-size: 1.4rem;
+    line-height: 1.25;
 }
 
 h3 {
     margin: 0;
     font-size: 1.05rem;
+    line-height: 1.35;
 }
 
 .hero-text,
@@ -917,8 +922,9 @@ textarea:focus {
 }
 
 .field span {
-    font-size: 0.92rem;
-    color: var(--muted);
+    font-size: 0.93rem;
+    font-weight: 700;
+    color: rgba(31, 41, 64, 0.9);
 }
 
 .compact-field {
@@ -940,6 +946,7 @@ textarea {
     border: 1px solid rgba(73, 40, 108, 0.14);
     background: rgba(255, 255, 255, 0.92);
     color: var(--ink);
+    line-height: 1.5;
 }
 
 textarea {
@@ -1079,10 +1086,14 @@ td {
 }
 
 th {
-    color: var(--muted);
-    font-size: 0.82rem;
+    color: rgba(31, 41, 64, 0.78);
+    font-size: 0.83rem;
     text-transform: uppercase;
     letter-spacing: 0.08em;
+}
+
+td {
+    line-height: 1.55;
 }
 
 .action-row,
