@@ -74,10 +74,9 @@
         justify-content: space-between;
         gap: 20px;
         padding: 16px 18px;
-        background:
-            linear-gradient(135deg, rgba(255, 152, 0, 0.9), rgba(255, 140, 109, 0.86) 46%, rgba(120, 101, 255, 0.82));
+        background: linear-gradient(135deg, rgba(255, 185, 88, 0.96), rgba(255, 145, 68, 0.93) 26%, rgba(255, 127, 104, 0.9) 58%, rgba(138, 103, 255, 0.9) 100%);
         border-bottom: 1px solid rgba(255, 255, 255, 0.18);
-        box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.12);
+        box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.12), 0 20px 42px rgba(72, 40, 108, 0.16);
         overflow: hidden;
     }
 
@@ -88,6 +87,17 @@
         background: linear-gradient(115deg, transparent 18%, rgba(255, 255, 255, 0.16) 46%, transparent 72%);
         transform: translateX(-120%);
         animation: dashboardHeaderSheen 8s ease-in-out infinite;
+        pointer-events: none;
+    }
+
+    .dashboard-frame-header::before {
+        content: "";
+        position: absolute;
+        inset: auto auto -46px -36px;
+        width: 180px;
+        height: 180px;
+        border-radius: 999px;
+        background: radial-gradient(circle, rgba(255, 248, 221, 0.36), rgba(255, 248, 221, 0));
         pointer-events: none;
     }
 
@@ -968,8 +978,12 @@
     .compact-form textarea {
         min-height: 44px;
         padding: 10px 14px;
-        border-radius: 12px;
-        background: linear-gradient(180deg, #ffffff, #fff7f0);
+        border-radius: 14px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.99), rgba(255, 246, 238, 0.96));
+        border: 1px solid rgba(255, 145, 68, 0.16);
+        box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.76),
+            0 10px 20px rgba(72, 40, 108, 0.06);
     }
 
     .compact-form textarea {
@@ -999,15 +1013,21 @@
     .dashboard-main .field input,
     .dashboard-main .field select,
     .dashboard-main .field textarea {
-        border: 1px solid rgba(120, 101, 255, 0.12);
-        box-shadow: none;
+        border: 1px solid rgba(138, 103, 255, 0.16);
+        background:
+            linear-gradient(180deg, rgba(255, 255, 255, 0.99), rgba(255, 247, 240, 0.97));
+        box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.76),
+            0 10px 22px rgba(72, 40, 108, 0.07);
     }
 
     .dashboard-main .field input:focus,
     .dashboard-main .field select:focus,
     .dashboard-main .field textarea:focus {
-        border-color: rgba(120, 101, 255, 0.32);
-        box-shadow: 0 0 0 4px rgba(120, 101, 255, 0.08);
+        border-color: rgba(138, 103, 255, 0.38);
+        box-shadow:
+            0 0 0 4px rgba(255, 185, 88, 0.18),
+            0 14px 28px rgba(138, 103, 255, 0.12);
     }
 
     .filter-grid {
