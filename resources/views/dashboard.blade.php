@@ -1555,6 +1555,18 @@
         z-index: 1;
     }
 
+    .mobile-scroll-hint {
+        display: none;
+        margin: 0 0 10px;
+        padding: 10px 12px;
+        border-radius: 14px;
+        background: linear-gradient(135deg, rgba(255, 185, 88, 0.14), rgba(138, 103, 255, 0.1));
+        border: 1px solid rgba(138, 103, 255, 0.12);
+        color: rgba(27, 35, 64, 0.82);
+        font-size: 0.86rem;
+        line-height: 1.55;
+    }
+
     @keyframes dashboardPanelIn {
         from {
             opacity: 0;
@@ -1898,12 +1910,32 @@
             padding: 12px 10px 16px;
         }
 
+        .dashboard-main-header,
+        .header-actions,
+        .cycle-switcher,
+        .cycle-switcher .field,
+        .cycle-switcher .compact-field {
+            width: 100%;
+        }
+
         .category-inline-edit {
             grid-template-columns: 1fr;
         }
 
         .header-actions {
             justify-content: flex-start;
+            align-items: stretch;
+        }
+
+        .header-actions > * {
+            width: 100%;
+        }
+
+        .header-actions .secondary-button,
+        .header-actions .insights-toggle,
+        .header-actions .cycle-switcher select {
+            width: 100%;
+            justify-content: center;
         }
 
         .insights-drawer {
@@ -1960,6 +1992,55 @@
         .board-panel canvas {
             height: 180px !important;
         }
+
+        .history-toolbar,
+        .filter-actions,
+        .goal-actions,
+        .profile-photo-actions {
+            grid-template-columns: 1fr;
+        }
+
+        .filter-actions,
+        .goal-actions {
+            display: grid;
+        }
+
+        .filter-actions > *,
+        .goal-actions > *,
+        .settings-submit,
+        .profile-photo-actions > *,
+        .history-toolbar .secondary-button,
+        .history-toolbar .primary-button,
+        .history-toolbar .danger-button {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .goal-card-header,
+        .goal-progress-meta,
+        .goal-editor-header,
+        .history-meta {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .goal-progress-value,
+        .budget-row-meta {
+            text-align: left;
+        }
+
+        .category-action-cell {
+            min-width: 100%;
+        }
+
+        .table-wrap {
+            margin: 0 -4px;
+            padding: 6px;
+        }
+
+        .mobile-scroll-hint {
+            display: block;
+        }
     }
 
     @media (max-width: 540px) {
@@ -2004,6 +2085,12 @@
 
         .dashboard-main-header p {
             font-size: 0.9rem;
+        }
+
+        .dashboard-main-header {
+            position: static;
+            margin: 0;
+            border-radius: 18px;
         }
 
         .dashboard-sidebar {
@@ -2097,6 +2184,13 @@
             font-size: 0.82rem;
         }
 
+        .field-hint,
+        .goal-helper-text,
+        .mobile-scroll-hint,
+        .profile-photo-note {
+            font-size: 0.82rem;
+        }
+
         .insights-drawer {
             padding: 14px 10px;
         }
@@ -2116,6 +2210,13 @@
         .reports-panel table,
         .board-panel table {
             min-width: 640px;
+        }
+
+        .history-toolbar,
+        .table-wrap,
+        .goal-card,
+        .profile-photo-panel {
+            border-radius: 14px;
         }
 
     }
@@ -2519,6 +2620,7 @@
                             <span>{{ $cycles->count() }} cycle{{ $cycles->count() === 1 ? '' : 's' }} shown out of {{ $allCycles->count() }} total.</span>
                     </div>
                 </form>
+                <p class="mobile-scroll-hint">Swipe left or right if you need to see all cycle columns on mobile.</p>
                 <div class="table-wrap">
                     <table>
                         <thead>
@@ -2651,7 +2753,7 @@
                         </div>
                     </div>
                 </form>
-
+                <p class="mobile-scroll-hint">Swipe horizontally to view the full transaction table on smaller screens.</p>
                 <div class="table-wrap">
                     <table>
                         <thead>
@@ -3093,6 +3195,7 @@
                             <span>{{ $categories->count() }} categor{{ $categories->count() === 1 ? 'y' : 'ies' }} shown out of {{ $allCategories->count() }} total.</span>
                         </div>
                     </form>
+                    <p class="mobile-scroll-hint">Swipe left or right to review every category action on mobile.</p>
                     <div class="table-wrap">
                         <table>
                             <thead>
