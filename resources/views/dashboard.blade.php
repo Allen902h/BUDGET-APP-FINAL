@@ -184,6 +184,27 @@
         filter: drop-shadow(0 16px 24px rgba(106, 43, 0, 0.28));
     }
 
+    .mobile-menu-toggle,
+    .mobile-sidebar-close {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        padding: 0 16px;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        background: rgba(255, 255, 255, 0.1);
+        color: #fffaf5;
+        font-weight: 800;
+        cursor: pointer;
+    }
+
+    .mobile-sidebar-close {
+        width: 100%;
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.14);
+    }
+
     .dashboard-sidebar {
         position: sticky;
         top: 12px;
@@ -528,6 +549,26 @@
         line-height: 1.55;
     }
 
+    .mobile-sidebar-backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(17, 24, 39, 0.44);
+        backdrop-filter: blur(6px);
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition:
+            opacity var(--motion-base) var(--ease-standard),
+            visibility var(--motion-base) linear;
+        z-index: 39;
+    }
+
+    .mobile-sidebar-backdrop.is-open {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+    }
+
     .dashboard-main {
         padding: 30px 26px 26px;
         display: grid;
@@ -585,63 +626,6 @@
         justify-content: flex-end;
         align-items: end;
     }
-
-    .mobile-quick-nav {
-        display: none;
-        position: fixed;
-        left: 10px;
-        right: 10px;
-        bottom: calc(10px + env(safe-area-inset-bottom, 0px));
-        z-index: 44;
-        pointer-events: none;
-    }
-
-    .mobile-quick-nav-track {
-        display: grid;
-        grid-template-columns: repeat(6, minmax(0, 1fr));
-        gap: 8px;
-        padding: 10px;
-        border-radius: 22px;
-        border: 1px solid rgba(120, 101, 255, 0.18);
-        background: linear-gradient(180deg, rgba(255, 251, 246, 0.96), rgba(244, 238, 255, 0.94));
-        box-shadow: 0 18px 40px rgba(72, 40, 108, 0.18);
-        backdrop-filter: blur(18px);
-        pointer-events: auto;
-    }
-
-    .mobile-quick-link,
-    .mobile-quick-insights {
-        display: grid;
-        gap: 4px;
-        justify-items: center;
-        min-height: 58px;
-        padding: 8px 6px;
-        border-radius: 16px;
-        border: 1px solid transparent;
-        background: transparent;
-        color: rgba(44, 33, 81, 0.78);
-        font-size: 0.72rem;
-        font-weight: 800;
-        line-height: 1.1;
-        text-align: center;
-        cursor: pointer;
-    }
-
-    .mobile-quick-link span,
-    .mobile-quick-insights span {
-        display: block;
-        font-size: 1rem;
-        line-height: 1;
-    }
-
-    .mobile-quick-link.active,
-    .mobile-quick-insights:hover {
-        border-color: rgba(120, 101, 255, 0.18);
-        background: linear-gradient(135deg, rgba(255, 152, 0, 0.14), rgba(120, 101, 255, 0.16));
-        color: #2c2151;
-        box-shadow: 0 10px 20px rgba(72, 40, 108, 0.1);
-    }
-
 
     .insights-toggle {
         display: inline-flex;
@@ -1771,7 +1755,35 @@
         }
 
         .dashboard-main {
-            padding: 14px 14px 102px;
+            padding: 14px;
+        }
+
+        .mobile-menu-toggle,
+        .mobile-sidebar-close {
+            display: inline-flex;
+        }
+
+        .dashboard-sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            z-index: 40;
+            width: min(320px, calc(100vw - 28px));
+            max-width: none;
+            max-height: none;
+            padding: 18px 14px 24px;
+            gap: 14px;
+            overflow-y: auto;
+            grid-template-columns: 1fr;
+            transform: translateX(-104%);
+            transition: transform var(--motion-base) var(--ease-emphasis);
+            border-right: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 16px 0 38px rgba(44, 36, 72, 0.24);
+        }
+
+        .dashboard-sidebar.is-mobile-open {
+            transform: translateX(0);
         }
 
         .dashboard-main-header {
@@ -1804,7 +1816,6 @@
 
         .dashboard-sidebar {
             gap: 14px;
-            padding: 14px;
         }
 
         .profile-photo-frame {
@@ -1844,10 +1855,6 @@
         .board-panel canvas {
             height: 180px !important;
         }
-
-        .mobile-quick-nav {
-            display: block;
-        }
     }
 
     @media (max-width: 540px) {
@@ -1882,7 +1889,7 @@
         }
 
         .dashboard-main {
-            padding: 10px 10px 98px;
+            padding: 10px;
             gap: 14px;
         }
 
@@ -1892,10 +1899,6 @@
 
         .dashboard-main-header p {
             font-size: 0.9rem;
-        }
-
-        .dashboard-sidebar {
-            padding: 10px;
         }
 
         .dashboard-identity {
@@ -1942,26 +1945,6 @@
 
         .sidebar-mini-card strong {
             font-size: 1.05rem;
-        }
-
-        .mobile-quick-nav {
-            left: 6px;
-            right: 6px;
-            bottom: calc(6px + env(safe-area-inset-bottom, 0px));
-        }
-
-        .mobile-quick-nav-track {
-            gap: 6px;
-            padding: 8px;
-            border-radius: 18px;
-        }
-
-        .mobile-quick-link,
-        .mobile-quick-insights {
-            min-height: 54px;
-            padding: 8px 4px;
-            border-radius: 14px;
-            font-size: 0.68rem;
         }
 
         .dashboard-kpi-grid {
@@ -2079,6 +2062,7 @@
         </div>
 
         <nav class="dashboard-frame-nav">
+            <button type="button" class="mobile-menu-toggle" data-mobile-nav-open>Menu</button>
             <span class="dashboard-nav-coin-shell" aria-hidden="true">
                 <span class="dashboard-nav-coin-orbit"></span>
                 <img class="dashboard-nav-coin-image" src="{{ asset('images/Coin.gif') }}" alt="" aria-hidden="true">
@@ -2090,7 +2074,10 @@
         </nav>
     </header>
 
+    <div class="mobile-sidebar-backdrop" data-mobile-nav-backdrop></div>
+
     <aside class="dashboard-sidebar">
+        <button type="button" class="mobile-sidebar-close" data-mobile-nav-close>Close navigation</button>
         <a class="dashboard-identity dashboard-nav-link" href="#settings" data-target="settings">
             <div class="dashboard-avatar">
                 @if($profilePhotoUrl)
@@ -2987,17 +2974,6 @@
             </div>
         </section>
     </section>
-
-    <nav class="mobile-quick-nav" aria-label="Mobile dashboard navigation">
-        <div class="mobile-quick-nav-track">
-            <button type="button" class="mobile-quick-link dashboard-nav-link active" data-target="overview"><span aria-hidden="true">O</span>Home</button>
-            <button type="button" class="mobile-quick-link dashboard-nav-link" data-target="planner"><span aria-hidden="true">P</span>Plan</button>
-            <button type="button" class="mobile-quick-link dashboard-nav-link" data-target="history"><span aria-hidden="true">H</span>History</button>
-            <button type="button" class="mobile-quick-link dashboard-nav-link" data-target="goals"><span aria-hidden="true">G</span>Goals</button>
-            <button type="button" class="mobile-quick-link dashboard-nav-link" data-target="settings"><span aria-hidden="true">S</span>Settings</button>
-            <button type="button" class="mobile-quick-insights" data-insights-open><span aria-hidden="true">R</span>Reports</button>
-        </div>
-    </nav>
 </div>
 
 @if($cycle && $summary)
@@ -3186,7 +3162,18 @@
         const insightsBackdrop = document.querySelector('[data-insights-backdrop]');
         const insightsOpenButtons = [...document.querySelectorAll('[data-insights-open]')];
         const insightsCloseButtons = [...document.querySelectorAll('[data-insights-close]')];
+        const mobileSidebar = document.querySelector('.dashboard-sidebar');
+        const mobileNavBackdrop = document.querySelector('[data-mobile-nav-backdrop]');
+        const mobileNavOpenButtons = [...document.querySelectorAll('[data-mobile-nav-open]')];
+        const mobileNavCloseButtons = [...document.querySelectorAll('[data-mobile-nav-close]')];
         const mobilePanelMedia = window.matchMedia('(max-width: 900px)');
+        const mobileDrawerMedia = window.matchMedia('(max-width: 760px)');
+
+        const syncBodyLock = () => {
+            const insightsOpen = insightsDrawer?.classList.contains('is-open');
+            const mobileNavOpen = mobileSidebar?.classList.contains('is-mobile-open');
+            document.body.style.overflow = insightsOpen || mobileNavOpen ? 'hidden' : '';
+        };
 
         const scrollPanelIntoView = (panel) => {
             if (!panel || !mobilePanelMedia.matches) {
@@ -3236,6 +3223,10 @@
             if (shouldScroll) {
                 scrollPanelIntoView(targetPanel);
             }
+
+            if (mobileDrawerMedia.matches) {
+                setMobileNavState(false);
+            }
         };
 
         const setInsightsState = (isOpen) => {
@@ -3246,7 +3237,17 @@
             insightsDrawer.classList.toggle('is-open', isOpen);
             insightsBackdrop.classList.toggle('is-open', isOpen);
             insightsDrawer.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
-            document.body.style.overflow = isOpen ? 'hidden' : '';
+            syncBodyLock();
+        };
+
+        const setMobileNavState = (isOpen) => {
+            if (!mobileSidebar || !mobileNavBackdrop) {
+                return;
+            }
+
+            mobileSidebar.classList.toggle('is-mobile-open', isOpen);
+            mobileNavBackdrop.classList.toggle('is-open', isOpen);
+            syncBodyLock();
         };
 
         navLinks.forEach((link) => {
@@ -3270,13 +3271,32 @@
             button.addEventListener('click', () => setInsightsState(false));
         });
 
+        mobileNavOpenButtons.forEach((button) => {
+            button.addEventListener('click', () => setMobileNavState(true));
+        });
+
+        mobileNavCloseButtons.forEach((button) => {
+            button.addEventListener('click', () => setMobileNavState(false));
+        });
+
         if (insightsBackdrop) {
             insightsBackdrop.addEventListener('click', () => setInsightsState(false));
+        }
+
+        if (mobileNavBackdrop) {
+            mobileNavBackdrop.addEventListener('click', () => setMobileNavState(false));
         }
 
         document.addEventListener('keydown', (event) => {
             if (event.key === 'Escape') {
                 setInsightsState(false);
+                setMobileNavState(false);
+            }
+        });
+
+        mobileDrawerMedia.addEventListener('change', (event) => {
+            if (!event.matches) {
+                setMobileNavState(false);
             }
         });
 
