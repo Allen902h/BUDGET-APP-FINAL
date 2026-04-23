@@ -586,6 +586,62 @@
         align-items: end;
     }
 
+    .mobile-quick-nav {
+        display: none;
+        position: fixed;
+        left: 10px;
+        right: 10px;
+        bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+        z-index: 44;
+        pointer-events: none;
+    }
+
+    .mobile-quick-nav-track {
+        display: grid;
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        gap: 8px;
+        padding: 10px;
+        border-radius: 22px;
+        border: 1px solid rgba(120, 101, 255, 0.18);
+        background: linear-gradient(180deg, rgba(255, 251, 246, 0.96), rgba(244, 238, 255, 0.94));
+        box-shadow: 0 18px 40px rgba(72, 40, 108, 0.18);
+        backdrop-filter: blur(18px);
+        pointer-events: auto;
+    }
+
+    .mobile-quick-link,
+    .mobile-quick-insights {
+        display: grid;
+        gap: 4px;
+        justify-items: center;
+        min-height: 58px;
+        padding: 8px 6px;
+        border-radius: 16px;
+        border: 1px solid transparent;
+        background: transparent;
+        color: rgba(44, 33, 81, 0.78);
+        font-size: 0.72rem;
+        font-weight: 800;
+        line-height: 1.1;
+        text-align: center;
+        cursor: pointer;
+    }
+
+    .mobile-quick-link span,
+    .mobile-quick-insights span {
+        display: block;
+        font-size: 1rem;
+        line-height: 1;
+    }
+
+    .mobile-quick-link.active,
+    .mobile-quick-insights:hover {
+        border-color: rgba(120, 101, 255, 0.18);
+        background: linear-gradient(135deg, rgba(255, 152, 0, 0.14), rgba(120, 101, 255, 0.16));
+        color: #2c2151;
+        box-shadow: 0 10px 20px rgba(72, 40, 108, 0.1);
+    }
+
 
     .insights-toggle {
         display: inline-flex;
@@ -1715,7 +1771,7 @@
         }
 
         .dashboard-main {
-            padding: 14px;
+            padding: 14px 14px 102px;
         }
 
         .dashboard-main-header {
@@ -1788,6 +1844,10 @@
         .board-panel canvas {
             height: 180px !important;
         }
+
+        .mobile-quick-nav {
+            display: block;
+        }
     }
 
     @media (max-width: 540px) {
@@ -1822,7 +1882,7 @@
         }
 
         .dashboard-main {
-            padding: 10px;
+            padding: 10px 10px 98px;
             gap: 14px;
         }
 
@@ -1882,6 +1942,26 @@
 
         .sidebar-mini-card strong {
             font-size: 1.05rem;
+        }
+
+        .mobile-quick-nav {
+            left: 6px;
+            right: 6px;
+            bottom: calc(6px + env(safe-area-inset-bottom, 0px));
+        }
+
+        .mobile-quick-nav-track {
+            gap: 6px;
+            padding: 8px;
+            border-radius: 18px;
+        }
+
+        .mobile-quick-link,
+        .mobile-quick-insights {
+            min-height: 54px;
+            padding: 8px 4px;
+            border-radius: 14px;
+            font-size: 0.68rem;
         }
 
         .dashboard-kpi-grid {
@@ -2907,6 +2987,17 @@
             </div>
         </section>
     </section>
+
+    <nav class="mobile-quick-nav" aria-label="Mobile dashboard navigation">
+        <div class="mobile-quick-nav-track">
+            <button type="button" class="mobile-quick-link dashboard-nav-link active" data-target="overview"><span aria-hidden="true">O</span>Home</button>
+            <button type="button" class="mobile-quick-link dashboard-nav-link" data-target="planner"><span aria-hidden="true">P</span>Plan</button>
+            <button type="button" class="mobile-quick-link dashboard-nav-link" data-target="history"><span aria-hidden="true">H</span>History</button>
+            <button type="button" class="mobile-quick-link dashboard-nav-link" data-target="goals"><span aria-hidden="true">G</span>Goals</button>
+            <button type="button" class="mobile-quick-link dashboard-nav-link" data-target="settings"><span aria-hidden="true">S</span>Settings</button>
+            <button type="button" class="mobile-quick-insights" data-insights-open><span aria-hidden="true">R</span>Reports</button>
+        </div>
+    </nav>
 </div>
 
 @if($cycle && $summary)
